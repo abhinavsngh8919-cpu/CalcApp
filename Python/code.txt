@@ -1,0 +1,128 @@
+import seaborn as sns
+import numpy as np
+import pandas as pd
+
+# Read in the data
+
+schools = pd.read_csv("schools.csv")
+
+# Preview the data
+
+schools.head()
+
+# Start coding here...
+
+# Add as many cells as you like...
+
+schools["math_perc"]=(schools["average_math"]/800*100).round(2)
+
+best_math_schools1=schools[schools["math_perc"]>80].sort_values(["math_perc"],ascending=False)
+
+best_math_schools=best_math_schools1[["school_name","average_math"]]
+
+print(best_math_schools)
+
+print(best_math_schools.columns)
+
+schools["total_SAT"]=schools["average_math"]+schools["average_writing"]+schools["average_reading"]
+
+schools["average_SAT"]=(schools["total_SAT"]/3).round(2)
+
+schools=schools.sort_values(["total_SAT"],ascending=False)
+
+print(schools.columns)
+
+top_10_schools=(schools.iloc[0:10])[["school_name","total_SAT"]]
+
+print(top_10_schools)
+
+dev_schools=pd.DataFrame()
+
+dev_schools["borough"]=schools["borough"].drop_duplicates
+
+dev_schools['num_schools']=schools["borough"].value_counts()
+
+dev_schools["Total_SAT"]=schools.groupby("borough")["total_SAT"].sum().round(2)
+
+dev_schools["average_SAT"]=(dev_schools["Total_SAT"]/dev_schools["num_schools"]).round(2)
+
+dev_schools["std_SAT"]=schools.groupby("borough")["total_SAT"].std().round(2)
+
+dev_schools=dev_schools.sort_values(["std_SAT"],ascending=False)
+
+print(dev_schools.columns)
+
+print(dev_schools.index)
+
+print(dev_schools)
+
+largest_std_dev=dev_schools[dev_schools["std_SAT"]==dev_schools["std_SAT"].max()]
+
+print(largest_std_dev)
+
+
+
+Crimes code:
+
+# Start coding here
+# Use as many cells as you need
+
+crimes["hours"]=crimes["TIME OCC"].str[0:2]
+crime_Time=crimes["hours"].value_counts()
+print("Crime count by hours of the day: ",crime_Time)
+#print(crime_Time.info())
+sns.countplot(x=crimes["hours"].sort_values(), data=crimes)
+plt.ylabel("crime_count")
+plt.show()
+crime_hour_dict=dict(crime_Time)
+tar=crime_Time.max()
+def func():
+  for key, val in crime_hour_dict.items():
+    if val==tar:
+        return(key)
+peak_crime_hour=int(func())
+print("Hour with highest frequency of crimes: ",peak_crime_hour,"hours")
+night_crimes=crimes[(crimes["TIME OCC"] >"2200")|(crimes["TIME OCC"]<"0359")]
+#print(night_crimes)
+night_crime_locations=night_crimes.groupby("AREA NAME")["AREA NAME"].value_counts()
+print(night_crime_locations)
+sns.countplot(x=night_crimes["AREA NAME"].sort_values(), data=night_crimes)
+plt.xticks(rotation=90)
+plt.ylabel("crime_count")
+peak_night_crime_location_bycount=night_crime_locations[night_crime_locations==night_crime_locations.max()]
+print(peak_night_crime_location_bycount)
+peak_night_crime_location="Central"
+print(peak_night_crime_location)
+victim_age_group=["0-17","18-25","26-34","35-44","45-54","55-64","65+"]
+victim_ages1=crimes[(crimes["Vict Age"]>=0)&(crimes["Vict Age"]<=17)]
+victim_ages2=crimes[(crimes["Vict Age"]>=18)&(crimes["Vict Age"]<=25)]
+victim_ages3=crimes[(crimes["Vict Age"]>=26)&(crimes["Vict Age"]<=34)]
+victim_ages4=crimes[(crimes["Vict Age"]>=35)&(crimes["Vict Age"]<=44)]
+victim_ages5=crimes[(crimes["Vict Age"]>=45)&(crimes["Vict Age"]<=54)]
+victim_ages6=crimes[(crimes["Vict Age"]>=55)&(crimes["Vict Age"]<=64)]
+victim_ages7=crimes[(crimes["Vict Age"]>=65)]
+victim_age1=victim_ages1["Vict Age"].value_counts().sum()
+victim_age2=victim_ages2["Vict Age"].value_counts().sum()
+victim_age3=victim_ages3["Vict Age"].value_counts().sum()
+victim_age4=victim_ages4["Vict Age"].value_counts().sum()
+victim_age5=victim_ages5["Vict Age"].value_counts().sum()
+victim_age6=victim_ages6["Vict Age"].value_counts().sum()
+victim_age7=victim_ages7["Vict Age"].value_counts().sum()
+a=[victim_age1, victim_age2, victim_age3, victim_age4, victim_age5 , victim_age6, victim_age7]
+victim_ages=pd.Series(a, index=victim_age_group)
+print(victim_ages)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
