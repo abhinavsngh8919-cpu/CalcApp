@@ -1,0 +1,79 @@
+Flask Calculator Web App
+A simple web-based calculator built using Python Flask. This app evaluates basic arithmetic expressions entered through an HTML form and displays the result on the same page.
+
+Features
+Handles basic arithmetic expressions (e.g., 2+2, 5*6, (8-3)/5)
+
+Displays result dynamically on the same HTML page
+
+Includes error handling for invalid inputs
+
+Tech Stack
+Python 3
+
+Flask
+
+HTML (Jinja templating)
+
+Project Structure
+bash
+project/
+│
+├── app.py              # Main Flask app
+├── templates/
+│   └── index.html      # HTML form and result display
+└── README.md           # This file
+
+Demo
+<!-- Optional: add a screenshot of your app here -->
+
+How to Run Locally
+Clone this repository
+
+bash
+git clone https://github.com/your-username/flask-calculator.git
+cd flask-calculator
+Create a virtual environment (optional but recommended)
+
+bash
+python -m venv venv
+source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+Install dependencies
+
+bash
+pip install flask
+
+Create index.html in the templates/ folder
+
+html
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flask Calculator</title>
+</head>
+<body>
+    <h2>Simple Calculator</h2>
+    <form method="POST">
+        <input type="text" name="display" placeholder="Enter expression" required>
+        <input type="submit" value="Calculate">
+    </form>
+    {% if result != '' %}
+        <h3>Result: {{ result }}</h3>
+    {% endif %}
+</body>
+</html>
+Run the app
+bash
+python app.py
+
+Open in browser
+Navigate to http://127.0.0.1:5000/
+
+⚠️ Disclaimer
+This app uses Python's eval() which can be dangerous if not properly secured. Do not use this in production or expose it to untrusted users. For a safer alternative, use a math expression parser like sympy or asteval.
+
+📄 License
+This project is licensed under the MIT License.
+
